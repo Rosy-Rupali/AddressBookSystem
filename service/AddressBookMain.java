@@ -13,13 +13,10 @@ import java.util.List;
 import java.util.Scanner;
 import model.Person;
 
-
-
 public class AddressBookMain {
 	private static Scanner scanner = new Scanner(System.in);
 	List<Person> personList = new ArrayList<>();
 	Person person = new Person();
-
 
 	/**
 	 * This method add the person detail in ArrayList
@@ -46,46 +43,63 @@ public class AddressBookMain {
 		System.out.println(personList);
 
 	}
-	
+
 	/**
 	 * This method is used to edit the details in contact based on the entered name
 	 */
 	public void edit() {
-		String name=null;
+		String name = null;
 		System.out.println("Enter the name of the record which we want to Edit");
 		name = scanner.next();
-		if(personList.isEmpty())
-		{
+		if (personList.isEmpty()) {
 			System.out.println("No records to edit");
 			return;
 		}
-		
-			for(int i=0;i<personList.size();i++)
-			{
-				if((personList.get(i).getFirstName().equals(name)) || (personList.get(i).getLastName().equals(name)))
-				{
-					System.out.println("Enter First name:");
-					person.setFirstName(scanner.next());
-					System.out.println("Enter Last name:");
-					person.setLastName(scanner.next());
-					System.out.println("Enter your address:");
-					person.setAddress(scanner.next());
-					System.out.println("Enter your city:");
-					person.setCity(scanner.next());
-					System.out.println("Enter your state:");
-					person.setState(scanner.next());
-					System.out.println("Enter your ZIP code:");
-					person.setZip(scanner.nextInt());
-					System.out.println("Enter your phone number");
-					person.setPhoneNumber(scanner.nextInt());
-					
-					personList.remove(i);
-					personList.add(i, person);
-				}
-				
+
+		for (int i = 0; i < personList.size(); i++) {
+			if ((personList.get(i).getFirstName().equals(name)) || (personList.get(i).getLastName().equals(name))) {
+				System.out.println("Enter First name:");
+				person.setFirstName(scanner.next());
+				System.out.println("Enter Last name:");
+				person.setLastName(scanner.next());
+				System.out.println("Enter your address:");
+				person.setAddress(scanner.next());
+				System.out.println("Enter your city:");
+				person.setCity(scanner.next());
+				System.out.println("Enter your state:");
+				person.setState(scanner.next());
+				System.out.println("Enter your ZIP code:");
+				person.setZip(scanner.nextInt());
+				System.out.println("Enter your phone number");
+				person.setPhoneNumber(scanner.nextInt());
+
+				personList.remove(i);
+				personList.add(i, person);
 			}
-		
+		}
 	}
+
+	/**
+	 * This method is used to delete the contact details of a particular record in
+	 * ArrayList
+	 */
+	public void delete() {
+
+		String name = null;
+		System.out.println("Enter the name you want to delete from the record");
+		name = scanner.next();
+		if (personList.isEmpty()) {
+			System.out.println("No records to delete");
+			return;
+		}
+		for (int i = 0; i < personList.size(); i++) {
+			if ((personList.get(i).getFirstName().equals(name)) || (personList.get(i).getLastName().equals(name))) {
+				personList.remove(i);
+			}
+		}
+		System.out.println("Record has been deleted successfully!");
+	}
+
 
 	public static void main(String[] args) {
 
@@ -94,7 +108,7 @@ public class AddressBookMain {
 		boolean isExit = false;
 		while (!isExit) {
 
-			System.out.println("Enter options 1:Add\n2:Edit\n3:Delete\n4:Exit\n5:Show Contact");
+			System.out.println("Enter options 1:Add\n2:Edit\n3:Delete\n4:Exit");
 			int option = scanner.nextInt();
 
 			switch (option) {
@@ -103,6 +117,12 @@ public class AddressBookMain {
 				break;
 			case 2:
 				book.edit();
+				break;
+			case 3:
+				book.delete();
+				break;
+			case 4:
+				isExit = true;
 				break;
 			default:
 				System.out.println("Invalid option");
