@@ -15,15 +15,17 @@ import model.Person;
 
 public class AddressBookMain {
 	
+
 	private static Scanner scanner = new Scanner(System.in);
 	List<Person> personList = new ArrayList<>();
 	Person person = new Person();
 
 	/**
-	 * This method add the person detail in ArrayList
+	 * This method is used to add the new person detail in ArrayList
+	 * and display the list.
 	 */
-	public void add() {
-		Person person = new Person();
+	public void addNewContact() {
+
 		System.out.println("Enter your First Name: ");
 		person.setFirstName(scanner.next());
 		scanner.nextLine();
@@ -53,10 +55,10 @@ public class AddressBookMain {
 	}
 
 	/**
-	 * This method is used to edit the details in contact based on the entered name
+	 * This method is used to edit the details in contact based on the entered First name
 	 */
 	public void edit() {
-		
+
 		System.out.println("Enter the name of the record which we want to Edit");
 		String name = scanner.next();
 		if (personList.isEmpty()) {
@@ -98,7 +100,7 @@ public class AddressBookMain {
 
 	/**
 	 * This method is used to delete the contact details of a particular record in
-	 * ArrayList
+	 * ArrayList based on the entered first name
 	 */
 	public void delete() {
 
@@ -117,32 +119,30 @@ public class AddressBookMain {
 	}
 
 
+	/**
+	 * The main method is adding the new contact if user wanted to add
+	 * multiple contact details in address book
+	 * 
+	 * @param args 
+	 */
+
 	public static void main(String[] args) {
 
 		System.out.println("Welcome to Address Book");
 		AddressBookMain book = new AddressBookMain();
+
 		boolean isExit = false;
 		while (!isExit) {
-
-			System.out.println("Enter options\n1:Add\n2:Edit\n3:Delete\n4:Exit");
-			int option = scanner.nextInt();
-
-			switch (option) {
-			case 1:
-				book.add();
-				break;
-			case 2:
-				book.edit();
-				break;
-			case 3:
-				book.delete();
-				break;
-			case 4:
+			System.out.println("Do You Want to Add New Contact(Y/N)");
+			char choice = scanner.next().charAt(0);
+			if ((choice == 'Y') || (choice == 'y')) {
+				book.addNewContact();
+			} else {
 				isExit = true;
 				break;
-			default:
-				System.out.println("Invalid option");
+
 			}
 		}
 	}
 }
+

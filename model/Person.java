@@ -1,3 +1,9 @@
+/**************************************************
+ * Purpose : It is a POJO concept program to store contact details
+ * @author Rosy Rupali
+ * @since 07-06-2021
+ *
+ *************************************************/
 package model;
 
 public class Person {
@@ -58,5 +64,11 @@ public class Person {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	@Override
+	public String toString() {
+		return "Person [firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", city=" + city
+				+ ", state=" + state + ", zip=" + zip + ", phoneNumber=" + phoneNumber + ", email=" + email + "]";
+	}
+	
 	
 }
