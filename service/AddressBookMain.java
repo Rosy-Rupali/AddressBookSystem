@@ -14,6 +14,7 @@ import java.util.Scanner;
 import model.Person;
 
 public class AddressBookMain {
+	
 	private static Scanner scanner = new Scanner(System.in);
 	List<Person> personList = new ArrayList<>();
 	Person person = new Person();
@@ -22,22 +23,29 @@ public class AddressBookMain {
 	 * This method add the person detail in ArrayList
 	 */
 	public void add() {
+		Person person = new Person();
 		System.out.println("Enter your First Name: ");
 		person.setFirstName(scanner.next());
+		scanner.nextLine();
 		System.out.println("Enter your Last Name: ");
 		person.setLastName(scanner.next());
+		scanner.nextLine();
 		System.out.println("Enter your address: ");
 		person.setAddress(scanner.next());
+		scanner.nextLine();
 		System.out.println("Enter your City: ");
 		person.setCity(scanner.next());
+		scanner.nextLine();
 		System.out.println("Enter your State: ");
 		person.setState(scanner.next());
+		scanner.nextLine();
 		System.out.println("Enter your Zip: ");
 		person.setZip(scanner.nextInt());
 		System.out.println("Enter your Phone Number: ");
 		person.setPhoneNumber(scanner.nextInt());
 		System.out.println("Enter your Email: ");
 		person.setEmail(scanner.next());
+		scanner.nextLine();
 
 		personList.add(person);
 		System.out.println(personList);
@@ -48,33 +56,42 @@ public class AddressBookMain {
 	 * This method is used to edit the details in contact based on the entered name
 	 */
 	public void edit() {
-		String name = null;
+		
 		System.out.println("Enter the name of the record which we want to Edit");
-		name = scanner.next();
+		String name = scanner.next();
 		if (personList.isEmpty()) {
 			System.out.println("No records to edit");
 			return;
 		}
 
 		for (int i = 0; i < personList.size(); i++) {
-			if ((personList.get(i).getFirstName().equals(name)) || (personList.get(i).getLastName().equals(name))) {
+			if (personList.get(i).getFirstName().equals(name)) {
 				System.out.println("Enter First name:");
 				person.setFirstName(scanner.next());
+				scanner.nextLine();
 				System.out.println("Enter Last name:");
 				person.setLastName(scanner.next());
+				scanner.nextLine();
 				System.out.println("Enter your address:");
 				person.setAddress(scanner.next());
+				scanner.nextLine();
 				System.out.println("Enter your city:");
 				person.setCity(scanner.next());
+				scanner.nextLine();
 				System.out.println("Enter your state:");
 				person.setState(scanner.next());
+				scanner.nextLine();
 				System.out.println("Enter your ZIP code:");
 				person.setZip(scanner.nextInt());
 				System.out.println("Enter your phone number");
 				person.setPhoneNumber(scanner.nextInt());
+				System.out.println("Enter your email");
+				person.setEmail(scanner.next());
+				scanner.nextLine();
 
 				personList.remove(i);
 				personList.add(i, person);
+				System.out.println(personList);
 			}
 		}
 	}
@@ -85,19 +102,18 @@ public class AddressBookMain {
 	 */
 	public void delete() {
 
-		String name = null;
 		System.out.println("Enter the name you want to delete from the record");
-		name = scanner.next();
+		String name = scanner.next();
 		if (personList.isEmpty()) {
 			System.out.println("No records to delete");
 			return;
 		}
 		for (int i = 0; i < personList.size(); i++) {
-			if ((personList.get(i).getFirstName().equals(name)) || (personList.get(i).getLastName().equals(name))) {
+			if (personList.get(i).getFirstName().equals(name)) {
 				personList.remove(i);
 			}
 		}
-		System.out.println("Record has been deleted successfully!");
+		System.out.println(personList);
 	}
 
 
@@ -108,7 +124,7 @@ public class AddressBookMain {
 		boolean isExit = false;
 		while (!isExit) {
 
-			System.out.println("Enter options 1:Add\n2:Edit\n3:Delete\n4:Exit");
+			System.out.println("Enter options\n1:Add\n2:Edit\n3:Delete\n4:Exit");
 			int option = scanner.nextInt();
 
 			switch (option) {
