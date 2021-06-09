@@ -9,23 +9,27 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import model.Person;
 
 public class AddressBookMain {
-	
 
 	private static Scanner scanner = new Scanner(System.in);
-	List<Person> personList = new ArrayList<>();
+	ArrayList<Person> personList = new ArrayList<>();
 	Person person = new Person();
+	HashMap<String, ArrayList<Person>> personMap = new HashMap<String, ArrayList<Person>>();
 
 	/**
-	 * This method is used to add the new person detail in ArrayList
-	 * and display the list.
+	 * This method is used to add the person detail in address book which has unique name in hash map and
+	 * display the person detail and address book name in form of key value pair.
 	 */
 	public void addNewContact() {
 
+		System.out.println("Enter the address book name: ");
+		String addressBook = scanner.next();
+		scanner.nextLine();
 		System.out.println("Enter your First Name: ");
 		person.setFirstName(scanner.next());
 		scanner.nextLine();
@@ -50,12 +54,15 @@ public class AddressBookMain {
 		scanner.nextLine();
 
 		personList.add(person);
+		personMap.put(addressBook, personList);
 		System.out.println(personList);
+		System.out.println(personMap);
 
 	}
 
 	/**
-	 * This method is used to edit the details in contact based on the entered First name
+	 * This method is used to edit the details in contact based on the entered First
+	 * name
 	 */
 	public void edit() {
 
@@ -118,12 +125,11 @@ public class AddressBookMain {
 		System.out.println(personList);
 	}
 
-
 	/**
-	 * The main method is adding the new contact if user wanted to add
-	 * multiple contact details in address book
+	 * The main method is adding the new contact if user wanted to add multiple
+	 * contact details in address book
 	 * 
-	 * @param args 
+	 * @param args
 	 */
 
 	public static void main(String[] args) {
@@ -133,14 +139,21 @@ public class AddressBookMain {
 
 		boolean isExit = false;
 		while (!isExit) {
-			System.out.println("Do You Want to Add New Contact(Y/N)");
-			char choice = scanner.next().charAt(0);
-			if ((choice == 'Y') || (choice == 'y')) {
+			System.out.println("Choose any one option :\n1:addContact\n2:editContact\n3:deleteContact\n4:exit");
+			int option = scanner.nextInt();
+			switch (option) {
+			case 1:
 				book.addNewContact();
-			} else {
+				break;
+			case 2:
+				book.edit();
+				break;
+			case 3:
+				book.delete();
+				break;
+			case 4:
 				isExit = true;
 				break;
-
 			}
 		}
 	}
