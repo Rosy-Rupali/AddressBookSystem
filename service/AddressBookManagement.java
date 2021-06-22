@@ -20,7 +20,7 @@ public class AddressBookManagement {
 		Scanner scanner = new Scanner(System.in);
 		boolean isExit = false;
 		while (!isExit) {
-			System.out.println("Choose any one option :\n1:addContact\n2:editContact\n3:deleteContact\n4:exit");
+			System.out.println("Choose any one option :\n1:addContact\n2:editContact\n3:deleteContact\n4:search City/State wise\n5:exit");
 			int option = scanner.nextInt();
 			switch (option) {
 			case 1:
@@ -33,6 +33,9 @@ public class AddressBookManagement {
 				object.delete();
 				break;
 			case 4:
+				object.search();
+				break;
+			case 5:
 				isExit = true;
 				break;
 			}

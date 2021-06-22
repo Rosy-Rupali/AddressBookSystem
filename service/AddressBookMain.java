@@ -1,8 +1,9 @@
 
 /**************************************************
- * Purpose : Address Book System
+ * Purpose : Address Book System is used to add, edit, delete and search the 
+ * 			 person details according to the state or the city.
  * @author Rosy Rupali
- * @since 07-06-2021
+ * @since 22-06-2021
  *
  *************************************************/
 
@@ -93,7 +94,6 @@ public class AddressBookMain {
 				personList.remove(i);
 				personList.add(i, person);
 				System.out.println(personList);
-				break;
 			}
 
 		}
@@ -113,8 +113,45 @@ public class AddressBookMain {
 		for (int i = 0; i < personList.size(); i++) {
 			if (personList.get(i).getFirstName().equals(name)) {
 				personList.remove(i);
-				break;
 			}
 		}
+	}
+
+	/**
+	 * This method is used to search the person name based on its city or state it
+	 * resides. if no person belong to the particular state or city then it return
+	 * no records founds.
+	 */
+	public void search() {
+		System.out.println("Search Preference:1.City  2.State");
+		int input = scanner.nextInt();
+		if (input == 1) {
+			System.out.println("Enter the City whose record u want to display");
+			String searchCity = scanner.next();
+			scanner.nextLine();
+			if (personList.stream().count() == 0) {
+				System.out.println("No records to Show");
+				return;
+			} else {
+				personList.stream().forEach(n -> {
+					if (n.getCity().equals(searchCity))
+						System.out.println(n.getFirstName());
+				});
+			}
+		} else {
+			System.out.println("Enter the State whose record u want to display");
+			String searchState = scanner.next();
+			scanner.nextLine();
+			if (personList.stream().count() == 0) {
+				System.out.println("No records to Show");
+				return;
+			} else {
+				personList.stream().forEach(n -> {
+					if (n.getState().equals(searchState))
+						System.out.println(n.getFirstName());
+				});
+			}
+		}
+
 	}
 }
