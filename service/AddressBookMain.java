@@ -1,7 +1,6 @@
 
 /**************************************************
- * Purpose : Address Book System is used to add, edit, delete and search the 
- * 			 person details according to the state or the city.
+ * Purpose : Address Book System is used to manage book details
  * @author Rosy Rupali
  * @since 22-06-2021
  *
@@ -10,148 +9,189 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import model.Person;
 
 public class AddressBookMain {
 
-	private static Scanner scanner = new Scanner(System.in);
-	ArrayList<Person> personList = new ArrayList<>();
-	Person person = new Person();
+	private static List<Person> personList = new ArrayList<>();// contains all person details
 
 	/**
-	 * This method is used to add the person detail in a particular
-	 * address book and check whether the same person details has not
-	 * been entered multiple times. 
+	 * to get all the list of contacts in one book
 	 */
-	public void add() {
-
-		System.out.println("Enter your First Name: ");
-		person.setFirstName(scanner.next());
-		scanner.nextLine();
-		System.out.println("Enter your Last Name: ");
-		person.setLastName(scanner.next());
-		scanner.nextLine();
-		System.out.println("Enter your address: ");
-		person.setAddress(scanner.next());
-		scanner.nextLine();
-		System.out.println("Enter your City: ");
-		person.setCity(scanner.next());
-		scanner.nextLine();
-		System.out.println("Enter your State: ");
-		person.setState(scanner.next());
-		scanner.nextLine();
-		System.out.println("Enter your Zip: ");
-		person.setZip(scanner.nextInt());
-		System.out.println("Enter your Phone Number: ");
-		person.setPhoneNumber(scanner.nextLong());
-		System.out.println("Enter your Email: ");
-		person.setEmail(scanner.next());
-		scanner.nextLine();
-
-		personList.stream().forEach(n -> {
-			if (n.getFirstName().equals(person.getFirstName())) {
-				System.out.println("Duplicate entry is found!!");
-			} else {
-				personList.add(person);
-			}
-		});
-		if (personList.size() == 0)
-			personList.add(person);
+	public void getPersonList() {
 		System.out.println(personList);
 	}
 
 	/**
-	 * This method is used to edit the details in contact based on the entered First
-	 * name
+	 * to remove person from list
+	 *
+	 * @param person object of Person class
 	 */
-	public void edit() {
+	public static void deleteContact(Person person) {
+		personList.remove(person);
+		System.out.println(personList);
+	}
 
-		System.out.println("Enter the 'First Name' of the record u want to Edit");
-		String name = scanner.nextLine();
-		if (personList.isEmpty()) {
-			System.out.println("No records to edit");
-			return;
+	/**
+	 * edits the person details of selected name
+	 */
+	public static void editDetails() {
+		Scanner scanner = new Scanner(System.in);
+		try (Scanner scanner1 = new Scanner(System.in)) {
+			System.out.println("Select option:" + "\n" + "1.first name" + "\n" + "2.last name" + "\n" + "3.address"
+					+ "\n" + "4.city" + "\n" + "5.state" + "\n" + "6.email" + "\n" + "7.zip" + "\n" + "8.phone number"
+					+ "\n" + "9.exit");
+
+			switch (scanner.nextInt()) {
+			case 1:
+				System.out.println("Enter first name to change: ");
+				Person.setFIRST_NAME(scanner1.nextLine());
+				break;
+			case 2:
+				System.out.println("Enter last name to change: ");
+				Person.setLAST_NAME(scanner1.nextLine());
+				break;
+			case 3:
+				System.out.println("Enter new address to change: ");
+				Person.setADDRESS(scanner1.nextLine());
+				break;
+			case 4:
+				System.out.println("Enter new city to change: ");
+				Person.setCITY(scanner1.nextLine());
+				break;
+			case 5:
+				System.out.println("Enter new state to change: ");
+				Person.setSTATE(scanner1.nextLine());
+				break;
+			case 6:
+				System.out.println("Enter new email to change: ");
+				Person.setEMAIL(scanner1.nextLine());
+				break;
+			case 7:
+				System.out.println("Enter new zip to change: ");
+				Person.setZIP(scanner1.nextInt());
+				break;
+			case 8:
+				System.out.println("Enter new phone number to change: ");
+				Person.setPHONE_NUMBER(scanner1.nextLong());
+				break;
+			default:
+				System.out.println("Thank you!");
+			}
 		}
 
-		for (int i = 0; i < personList.size(); i++) {
-			if (personList.get(i).getFirstName().equals(name)) {
-				System.out.println(name);
-				System.out.println("Enter First name:");
-				person.setFirstName(scanner.next());
-				System.out.println("Enter last name:");
-				person.setLastName(scanner.next());
-				System.out.println("Enter your address:");
-				person.setAddress(scanner.next());
-				System.out.println("Enter your city:");
-				person.setCity(scanner.next());
-				System.out.println("Enter your state:");
-				person.setState(scanner.next());
-				System.out.println("Enter your ZIP code:");
-				person.setZip(scanner.nextInt());
-				System.out.println("Enter your phone number");
-				person.setPhoneNumber(scanner.nextLong());
-				personList.remove(i);
-				personList.add(i, person);
-				System.out.println(personList);
+		System.out.println(personList);
+	}
+
+	/**
+	 * takes details from the user and adds them to the Person. Then adds the Person
+	 * to the list
+	 */
+	public static void addContact() {
+		Person person = new Person();
+
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter first name");
+		Person.setFIRST_NAME(scanner.next());
+		scanner.nextLine();
+		System.out.println("Enter last name");
+		Person.setLAST_NAME(scanner.next());
+		scanner.nextLine();
+		System.out.println("Enter address");
+		Person.setADDRESS(scanner.next());
+		scanner.nextLine();
+		System.out.println("Enter city");
+		Person.setCITY(scanner.next());
+		scanner.nextLine();
+		System.out.println("Enter state");
+		Person.setSTATE(scanner.next());
+		scanner.nextLine();
+		System.out.println("Enter email");
+		Person.setEMAIL(scanner.next());
+		scanner.nextLine();
+		System.out.println("Enter zip");
+		Person.setZIP(scanner.nextInt());
+
+		System.out.println("Enter phone number");
+		Person.setPHONE_NUMBER(scanner.nextLong());
+
+		personList.add(person);
+		System.out.println(personList);
+	}
+
+	/**
+	 * to access the book
+	 */
+	public void accessContact() {
+		boolean isExit = false;
+		while (!isExit) {
+			System.out.println("Select option: \n1.Add Contact\n2.Edit Contact\n3.Delete Contact\n4.Exit");
+			Scanner scanner = new Scanner(System.in);
+			int option = scanner.nextInt();
+			switch (option) {
+			case 1:
+				if (!isPersonExist(getName())) {
+					addContact();
+				} else {
+					System.out.println("Person already exists!");
+				}
+				break;
+			case 2:
+				if (isPersonExist(getName())) {
+					editDetails();
+				} else {
+					System.out.println("Person does not exists!");
+				}
+				break;
+			case 3:
+				String name = getName();
+				if (isPersonExist(name)) {
+					Person person = search(name);
+					deleteContact(person);
+				}
+				break;
+			default:
+				System.out.println("Thanks!");
+				isExit = true;
 			}
 
 		}
 	}
 
 	/**
-	 * This method is used to delete the contact details of a particular record in
-	 * ArrayList based on the entered first name
+	 * asks the user for name and returns it
+	 *
+	 * @return person name
 	 */
-	public void delete() {
-		System.out.println("Enter the First name of the record you want to delete");
-		String name = scanner.nextLine();
-		if (personList.isEmpty()) {
-			System.out.println("No records to delete");
-			return;
-		}
-		for (int i = 0; i < personList.size(); i++) {
-			if (personList.get(i).getFirstName().equals(name)) {
-				personList.remove(i);
-			}
-		}
+	private static String getName() {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter person name");
+		return scanner.nextLine();
 	}
 
 	/**
-	 * This method is used to search the person name based on its city or state it
-	 * resides. if no person belong to the particular state or city then it return
-	 * no records founds.
+	 * To find if person exists or not
+	 *
+	 * @param name first or last name of the person
+	 * @return true/false
 	 */
-	public void search() {
-		System.out.println("Search Preference:1.City  2.State");
-		int input = scanner.nextInt();
-		if (input == 1) {
-			System.out.println("Enter the City whose record u want to display");
-			String searchCity = scanner.next();
-			scanner.nextLine();
-			if (personList.stream().count() == 0) {
-				System.out.println("No records to Show");
-				return;
-			} else {
-				personList.stream().forEach(n -> {
-					if (n.getCity().equals(searchCity))
-						System.out.println(n.getFirstName());
-				});
-			}
-		} else {
-			System.out.println("Enter the State whose record u want to display");
-			String searchState = scanner.next();
-			scanner.nextLine();
-			if (personList.stream().count() == 0) {
-				System.out.println("No records to Show");
-				return;
-			} else {
-				personList.stream().forEach(n -> {
-					if (n.getState().equals(searchState))
-						System.out.println(n.getFirstName());
-				});
-			}
-		}
+	private static boolean isPersonExist(String name) {
+		return personList.stream().anyMatch(personElement -> personElement.getFIRST_NAME().equals(name)
+				|| personElement.getLAST_NAME().equals(name));
+	}
 
+	/**
+	 * To search the person
+	 *
+	 * @param name first or last name of the person
+	 * @return object of the Person (Person it self)
+	 */
+	private static Person search(String name) {
+		Person foundPerson = personList.stream()
+				.filter(contact -> contact.getFIRST_NAME().equals(name) || contact.getLAST_NAME().equals(name))
+				.findFirst().orElse(null);
+		return foundPerson;
 	}
 }
