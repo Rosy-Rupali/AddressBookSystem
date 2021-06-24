@@ -43,11 +43,8 @@ public class AddressBookSimulator {
 				String contactName = scannerForUserInput.scannerInitializer().nextLine();
 				addressBookSimulator.booksMap.entrySet().forEach(entry -> {
 					System.out.println(entry.getKey());
-					System.out
-							.println(
-									entry.getValue().getPersonList().stream()
-											.filter(person -> person.getFIRST_NAME().equals(contactName)
-													|| person.getLAST_NAME().equals(contactName))
+					System.out.println(entry.getValue().getPersonList().stream()
+											.filter(person -> person.getFIRST_NAME().equals(contactName) || person.getLAST_NAME().equals(contactName))
 											.findFirst().orElse(null));
 				});
 				break;

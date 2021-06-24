@@ -10,7 +10,6 @@ package service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import model.Person;
 
@@ -18,23 +17,22 @@ public class AddressBookMain {
 
 	ScannerForUserInput scannerForUserInput = new ScannerForUserInput();
 	List<Person> personList = new ArrayList<>();// contains all person details
-	
-
-	 /**
-    * Initializes Contact class when new contact is added
-    */
-   public Person initializer() {
-       Person person = new Person();
-       return person;
-   }
-   
-   @Override
-   public String toString() {
-       return "AddressBookMain{" + "personList = " + personList + '}';
-   }
 
 	/**
-	 * to get all the list of contacts in one book
+	 * Initializes Person class when new person is added
+	 */
+	public Person initializer() {
+		Person person = new Person();
+		return person;
+	}
+
+	@Override
+	public String toString() {
+		return "AddressBookMain{" + "personList = " + personList + '}';
+	}
+
+	/**
+	 * to get all the list of persons in one book
 	 */
 	public List<Person> getPersonList() {
 		return personList;
@@ -55,45 +53,47 @@ public class AddressBookMain {
 	 */
 	public void editDetails() {
 		Person person = search(getName());
-		 if(person != null) {
-			 System.out.println("Select option:" + "\n" + "1.first name" + "\n" + "2.last name" + "\n" + "3.address" + "\n" + "4.city" + "\n" + "5.state" + "\n" + "6.email" + "\n" + "7.zip" + "\n" + "8.phone number" + "\n" + "9.exit");
-	            switch(scannerForUserInput.scannerInitializer().nextInt()) {
-	                case 1:
-	                    System.out.println("Enter new first name to change: ");
-	                    Person.setFIRST_NAME(scannerForUserInput.scannerInitializer().nextLine());
-	                    break;
-	                case 2:
-	                    System.out.println("Enter new last name to change: ");
-	                    Person.setLAST_NAME(scannerForUserInput.scannerInitializer().nextLine());
-	                    break;
-	                case 3:
-	                    System.out.println("Enter new address to change: ");
-	                    Person.setADDRESS(scannerForUserInput.scannerInitializer().nextLine());
-	                    break;
-	                case 4:
-	                    System.out.println("Enter new city to change: ");
-	                    Person.setCITY(scannerForUserInput.scannerInitializer().nextLine());
-	                    break;
-	                case 5:
-	                    System.out.println("Enter new state to change: ");
-	                    Person.setSTATE(scannerForUserInput.scannerInitializer().nextLine());
-	                    break;
-	                case 6:
-	                    System.out.println("Enter new email to change: ");
-	                    Person.setEMAIL(scannerForUserInput.scannerInitializer().nextLine());
-	                    break;
-	                case 7:
-	                    System.out.println("Enter new zip to change: ");
-	                    Person.setZIP(scannerForUserInput.scannerInitializer().nextInt());
-	                    break;
-	                case 8:
-	                    System.out.println("Enter new phone number to change: ");
-	                    Person.setPHONE_NUMBER(scannerForUserInput.scannerInitializer().nextLong());
-	                    break;
-	                default:
-	                    System.out.println("Thank you!");
-	            }
-	        }
+		if (person != null) {
+			System.out.println("Select option:" + "\n" + "1.first name" + "\n" + "2.last name" + "\n" + "3.address"
+					+ "\n" + "4.city" + "\n" + "5.state" + "\n" + "6.email" + "\n" + "7.zip" + "\n" + "8.phone number"
+					+ "\n" + "9.exit");
+			switch (scannerForUserInput.scannerInitializer().nextInt()) {
+			case 1:
+				System.out.println("Enter new first name to change: ");
+				Person.setFIRST_NAME(scannerForUserInput.scannerInitializer().nextLine());
+				break;
+			case 2:
+				System.out.println("Enter new last name to change: ");
+				Person.setLAST_NAME(scannerForUserInput.scannerInitializer().nextLine());
+				break;
+			case 3:
+				System.out.println("Enter new address to change: ");
+				Person.setADDRESS(scannerForUserInput.scannerInitializer().nextLine());
+				break;
+			case 4:
+				System.out.println("Enter new city to change: ");
+				Person.setCITY(scannerForUserInput.scannerInitializer().nextLine());
+				break;
+			case 5:
+				System.out.println("Enter new state to change: ");
+				Person.setSTATE(scannerForUserInput.scannerInitializer().nextLine());
+				break;
+			case 6:
+				System.out.println("Enter new email to change: ");
+				Person.setEMAIL(scannerForUserInput.scannerInitializer().nextLine());
+				break;
+			case 7:
+				System.out.println("Enter new zip to change: ");
+				Person.setZIP(scannerForUserInput.scannerInitializer().nextInt());
+				break;
+			case 8:
+				System.out.println("Enter new phone number to change: ");
+				Person.setPHONE_NUMBER(scannerForUserInput.scannerInitializer().nextLong());
+				break;
+			default:
+				System.out.println("Thank you!");
+			}
+		}
 
 		System.out.println(personList);
 	}
@@ -105,32 +105,32 @@ public class AddressBookMain {
 	public void addContact() {
 		Person person = initializer();
 
-		 System.out.println("Enter first name");
-	        Person.setFIRST_NAME(scannerForUserInput.scannerInitializer().nextLine());
+		System.out.println("Enter first name");
+		Person.setFIRST_NAME(scannerForUserInput.scannerInitializer().nextLine());
 
-	        System.out.println("Enter last name");
-	        Person.setLAST_NAME(scannerForUserInput.scannerInitializer().nextLine());
+		System.out.println("Enter last name");
+		Person.setLAST_NAME(scannerForUserInput.scannerInitializer().nextLine());
 
-	        System.out.println("Enter address");
-	        Person.setADDRESS(scannerForUserInput.scannerInitializer().nextLine());
+		System.out.println("Enter address");
+		Person.setADDRESS(scannerForUserInput.scannerInitializer().nextLine());
 
-	        System.out.println("Enter city");
-	        Person.setCITY(scannerForUserInput.scannerInitializer().nextLine());
+		System.out.println("Enter city");
+		Person.setCITY(scannerForUserInput.scannerInitializer().nextLine());
 
-	        System.out.println("Enter state");
-	        Person.setSTATE(scannerForUserInput.scannerInitializer().nextLine());
+		System.out.println("Enter state");
+		Person.setSTATE(scannerForUserInput.scannerInitializer().nextLine());
 
-	        System.out.println("Enter email");
-	        Person.setEMAIL(scannerForUserInput.scannerInitializer().nextLine());
+		System.out.println("Enter email");
+		Person.setEMAIL(scannerForUserInput.scannerInitializer().nextLine());
 
-	        System.out.println("Enter zip");
-	        Person.setZIP(scannerForUserInput.scannerInitializer().nextInt());
+		System.out.println("Enter zip");
+		Person.setZIP(scannerForUserInput.scannerInitializer().nextInt());
 
-	        System.out.println("Enter phone number");
-	        Person.setPHONE_NUMBER(scannerForUserInput.scannerInitializer().nextLong());
+		System.out.println("Enter phone number");
+		Person.setPHONE_NUMBER(scannerForUserInput.scannerInitializer().nextLong());
 
-	        personList.add(person);
-	        System.out.println(personList);
+		personList.add(person);
+		System.out.println(personList);
 	}
 
 	/**
@@ -139,7 +139,8 @@ public class AddressBookMain {
 	public void accessContact() {
 		boolean isExit = false;
 		while (!isExit) {
-			System.out.println("Select option: \n1.Add Contact\n2.Edit Contact\n3.Delete Contact\n4.Find contact\\\n5.Exit");
+			System.out.println(
+					"Select option: \n1.Add Contact\n2.Edit Contact\n3.Delete Contact\n4.Find contact\\\n5.Exit");
 			int option = scannerForUserInput.scannerInitializer().nextInt();
 			switch (option) {
 			case 1:
@@ -161,7 +162,7 @@ public class AddressBookMain {
 				if (isPersonExist(name)) {
 					Person person = search(name);
 					deleteContact(person);
-				}else {
+				} else {
 					System.out.println("Person does not exist");
 				}
 				break;
