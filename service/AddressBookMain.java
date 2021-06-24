@@ -20,8 +20,8 @@ public class AddressBookMain {
 	/**
 	 * to get all the list of contacts in one book
 	 */
-	public void getPersonList() {
-		System.out.println(personList);
+	public List<Person> getPersonList() {
+		return personList;
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class AddressBookMain {
 	public void accessContact() {
 		boolean isExit = false;
 		while (!isExit) {
-			System.out.println("Select option: \n1.Add Contact\n2.Edit Contact\n3.Delete Contact\n4.Exit");
+			System.out.println("Select option: \n1.Add Contact\n2.Edit Contact\n3.Delete Contact\n4.Find contact\\\n5.Exit");
 			Scanner scanner = new Scanner(System.in);
 			int option = scanner.nextInt();
 			switch (option) {
@@ -152,6 +152,9 @@ public class AddressBookMain {
 					deleteContact(person);
 				}
 				break;
+			 case 4:
+                 findContactOptions();
+                 break;
 			default:
 				System.out.println("Thanks!");
 				isExit = true;
@@ -159,6 +162,39 @@ public class AddressBookMain {
 
 		}
 	}
+
+	
+	/**
+     * finds the contact of a person by it's name, city or state
+     */
+    private static void findContactOptions(){
+        System.out.println("Select the option: \n1.find by contact name\n2.find by city/state\n3.exit");
+        Scanner scanner = new Scanner(System.in);
+        int option = scanner.nextInt();
+
+        switch(option){
+            case 1:
+                String name1 = getName();
+                if(isPersonExist(name1)) {
+                    Person person = search(name1);
+                    System.out.println("Contact " + name1 + ": " +person);
+                }else{
+                    System.out.println("City/State does not exists!");
+                }
+                break;
+            case 2:
+                String name2 = getCityOrStateName();
+                if(isCityOrStateExist(name2)) {
+                    Person person = searchByCityOrState(name2);
+                    System.out.println("Contact from city/state " + name2 + ": " +person);
+                }else{
+                    System.out.println("City/State does not exists!");
+                }
+                break;
+            default:
+                System.out.println("Thank you!");
+        }
+    }
 
 	/**
 	 * asks the user for name and returns it
@@ -170,6 +206,17 @@ public class AddressBookMain {
 		System.out.println("Enter person name");
 		return scanner.nextLine();
 	}
+	
+	 /**
+     * asks the user for name and returns it
+     *
+     * @return name of city/state
+     */
+    private static String getCityOrStateName() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter city/state name");
+        return scanner.nextLine();
+    }
 
 	/**
 	 * To find if person exists or not
@@ -181,6 +228,15 @@ public class AddressBookMain {
 		return personList.stream().anyMatch(personElement -> personElement.getFIRST_NAME().equals(name)
 				|| personElement.getLAST_NAME().equals(name));
 	}
+	
+	 /**
+     * checks the list for city/state
+     * @param name city/state name given by user
+     * @return true/false
+     */
+    private static boolean isCityOrStateExist(String name) {
+        return personList.stream().anyMatch(personElement -> personElement.getCITY().equals(name) || personElement.getSTATE().equals(name));
+    }
 
 	/**
 	 * To search the person
@@ -194,4 +250,16 @@ public class AddressBookMain {
 				.findFirst().orElse(null);
 		return foundPerson;
 	}
+	
+	 /**
+	  * To search the person according to it's state and city
+	 * @param name city or state of the person
+	 * @return  object of the Person (Person it self)
+	 */
+	private static Person searchByCityOrState(String name){
+	        Person foundPerson = personList.stream()
+	        		.filter(person -> person.getSTATE().equals(name) || person.getCITY().equals(name))
+	        		.findFirst().orElse(null);
+	        return foundPerson;
+	    }
 }
