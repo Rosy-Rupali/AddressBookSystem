@@ -6,6 +6,8 @@
  *************************************************/
 package model;
 
+import java.util.Objects;
+
 public class Person {
 	private static String FIRST_NAME;
 	private static String LAST_NAME;
@@ -22,9 +24,9 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return "Person [getFIRST_NAME()=" + getFIRST_NAME() + ", getLAST_NAME()=" + getLAST_NAME() + ", getADDRESS()="
-				+ getADDRESS() + ", getCITY()=" + getCITY() + ", getSTATE()=" + getSTATE() + ", getEMAIL()="
-				+ getEMAIL() + ", getZIP()=" + getZIP() + ", getPHONE_NUMBER()=" + getPHONE_NUMBER() + "]";
+		return "Person [FIRST_NAME =" + getFIRST_NAME() + ", LAST_NAME =" + getLAST_NAME() + ", ADDRESS ="
+				+ getADDRESS() + ", CITY =" + getCITY() + ", STATE =" + getSTATE() + ", EMAIL =" + getEMAIL()
+				+ ", ZIP =" + getZIP() + ", PHONE_NUMBER =" + getPHONE_NUMBER() + "]";
 	}
 
 	public static void setFIRST_NAME(String FIRST_NAME) {
@@ -85,6 +87,23 @@ public class Person {
 
 	public static void setPHONE_NUMBER(long PHONE_NUMBER) {
 		Person.PHONE_NUMBER = PHONE_NUMBER;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(FIRST_NAME, LAST_NAME);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null || getClass() != obj.getClass()) {
+			return false;
+		}
+		Person person = (Person) obj;
+		return Objects.equals(FIRST_NAME, Person.FIRST_NAME) && Objects.equals(LAST_NAME, Person.LAST_NAME);
 	}
 
 }
