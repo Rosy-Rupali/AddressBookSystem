@@ -7,53 +7,74 @@
 package service;
 
 import java.util.HashMap;
-import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class AddressBookSimulator {
 
-	private static HashMap<String, AddressBookMain> booksMap = new HashMap<>();
+	HashMap<String, AddressBookMain> booksMap = new HashMap<>();
 
 	/**
 	 * main method
 	 */
 	public static void main(String[] args) {
+		ScannerForUserInput scannerForUserInput = new ScannerForUserInput();
+		AddressBookSimulator addressBookSimulator = new AddressBookSimulator();
 		boolean isExit = false;
 		while (!isExit) {
-			System.out.println("Select options: \n1.Add Book\n2.AccessBook\n3.Search contact\\\n4.Exit");
-			Scanner scanner = new Scanner(System.in);
-			int option = scanner.nextInt();
+			System.out.println("Select options: \n1.Add Book\n2.AccessBook\n3.Search contact by first/last name\n"
+					+ "4.Search contact by city/state\n5.Find number of contacts\n6.Exit");
+			int option = scannerForUserInput.scannerInitializer().nextInt();
 
 			switch (option) {
 			case 1:
 				System.out.println("Enter the name of new book");
-				Scanner scanner1 = new Scanner(System.in);
-				String bookName = scanner1.nextLine();
-				booksMap.put(bookName, new AddressBookMain());
+				String bookName = scannerForUserInput.scannerInitializer().nextLine();
+				addressBookSimulator.booksMap.put(bookName, new AddressBookMain());
 				break;
 			case 2:
-				System.out.println("Enter the name of the book to access it");
-				Scanner scanner2 = new Scanner(System.in);
-				Object bookName1 = scanner2.nextLine();
-				if (booksMap.containsKey(bookName1)) {
-					AddressBookMain bookManager = booksMap.get(bookName1);
-					bookManager.accessContact();
-					bookManager.getPersonList();
+				System.out.println("Enter the name of new book to access it");
+				Object bookName1 = scannerForUserInput.scannerInitializer().nextLine();
+				if (addressBookSimulator.booksMap.containsKey(bookName1)) {
+					AddressBookMain contactManager = addressBookSimulator.booksMap.get(bookName1);
+					contactManager.accessContact();
 				}
 				break;
 			case 3:
-				System.out.println("Enter the name to search");
-				Scanner scanner3 = new Scanner(System.in);
-				String name = scanner3.nextLine();
-				System.out.println(booksMap.values().stream()
-						.flatMap(book -> book.getPersonList().stream()
-						.filter(person -> person.getSTATE().equals(name) || person.getCITY().equals(name)))
-						.collect(Collectors.toList()));
+				System.out.println("Enter the first/last name to search");
+				String contactName = scannerForUserInput.scannerInitializer().nextLine();
+				addressBookSimulator.booksMap.entrySet().forEach(entry -> {
+					System.out.println(entry.getKey());
+					System.out
+							.println(
+									entry.getValue().getPersonList().stream()
+											.filter(person -> person.getFIRST_NAME().equals(contactName)
+													|| person.getLAST_NAME().equals(contactName))
+											.findFirst().orElse(null));
+				});
+				break;
+			case 4:
+				System.out.println("Enter the city/state name to search");
+				String placeName = scannerForUserInput.scannerInitializer().nextLine();
+				addressBookSimulator.booksMap.entrySet().forEach(entry -> {
+					System.out.println(entry.getKey());
+					System.out.println(entry.getValue().getPersonList().stream()
+							.filter(person -> person.getCITY().equals(placeName) || person.getSTATE().equals(placeName))
+							.findFirst().orElse(null));
+				});
+				break;
+			case 5:
+				System.out.println("Enter the city/state name to search number of contacts");
+				String placeName2 = scannerForUserInput.scannerInitializer().nextLine();
+				addressBookSimulator.booksMap.entrySet().forEach(entry -> {
+					System.out.println(entry.getKey());
+					System.out.println("same cities or states: " + entry.getValue().getPersonList().stream().filter(
+							person -> person.getCITY().equals(placeName2) || person.getSTATE().equals(placeName2))
+							.count());
+				});
 				break;
 			default:
-				System.out.println("Thanks for using Address Book Simulator!");
 				isExit = true;
-				scanner.close();
+				System.out.println("Thanks for using Address Book Simulator!");
+				scannerForUserInput.scannerInitializer().close();
 			}
 		}
 	}
