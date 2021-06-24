@@ -32,7 +32,7 @@ public class AddressBookSimulator {
 				booksMap.put(bookName, new AddressBookMain());
 				break;
 			case 2:
-				System.out.println("Enter the name of new book to access it");
+				System.out.println("Enter the name of the book to access it");
 				Scanner scanner2 = new Scanner(System.in);
 				Object bookName1 = scanner2.nextLine();
 				if (booksMap.containsKey(bookName1)) {
@@ -41,14 +41,15 @@ public class AddressBookSimulator {
 					bookManager.getPersonList();
 				}
 				break;
-			 case 3:
-                 System.out.println("Enter the name to search");
-                 Scanner scanner3 = new Scanner(System.in);
-                 String name = scanner3.nextLine();
-                 System.out.println(booksMap.values().stream().flatMap(book -> book.getPersonList().stream()
-                		 .filter(person -> person.getSTATE().equals(name) || person.getCITY().equals(name)))
-                		 .collect(Collectors.toList()));
-                 break;
+			case 3:
+				System.out.println("Enter the name to search");
+				Scanner scanner3 = new Scanner(System.in);
+				String name = scanner3.nextLine();
+				System.out.println(booksMap.values().stream()
+						.flatMap(book -> book.getPersonList().stream()
+						.filter(person -> person.getSTATE().equals(name) || person.getCITY().equals(name)))
+						.collect(Collectors.toList()));
+				break;
 			default:
 				System.out.println("Thanks for using Address Book Simulator!");
 				isExit = true;
