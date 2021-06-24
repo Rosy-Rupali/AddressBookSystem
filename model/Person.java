@@ -7,67 +7,69 @@
 package model;
 
 public class Person {
-	private String firstName;
-	private String lastName;
-	private String address;
-	private String city;
-	private String state;
-	private int zip;
-	private int phoneNumber;
-	private String email;
-	
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
-	public String getState() {
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
-	}
-	public int getZip() {
-		return zip;
-	}
-	public void setZip(int zip) {
-		this.zip = zip;
-	}
-	public int getPhoneNumber() {
-		return phoneNumber;
-	}
-	public void setPhoneNumber(int phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
+	private static String FIRST_NAME;
+	private static String LAST_NAME;
+    private static String ADDRESS;
+    private static String CITY;
+	private static String STATE;
+    private static String EMAIL;
+    private static int ZIP;
+    private static long PHONE_NUMBER;
+    
+	public String getFIRST_NAME() {
+		return FIRST_NAME;
 	}
 	@Override
 	public String toString() {
-		return "Person [firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", city=" + city
-				+ ", state=" + state + ", zip=" + zip + ", phoneNumber=" + phoneNumber + ", email=" + email + "]";
+		return "Person [getFIRST_NAME()=" + getFIRST_NAME() + ", getLAST_NAME()=" + getLAST_NAME()
+				+ ", getADDRESS()=" + getADDRESS() + ", getCITY()=" + getCITY() + ", getSTATE()=" + getSTATE()
+				+ ", getEMAIL()=" + getEMAIL() + ", getZIP()=" + getZIP() + ", getPHONE_NUMBER()="
+				+ getPHONE_NUMBER() + "]";
+	}
+	public static void setFIRST_NAME(String FIRST_NAME) {
+		Person.FIRST_NAME = FIRST_NAME;
+	}
+	public String getLAST_NAME() {
+		return LAST_NAME;
+	}
+	public static void setLAST_NAME(String LAST_NAME) {
+		Person.LAST_NAME = LAST_NAME;
+	}
+	public String getADDRESS() {
+		return ADDRESS;
+	}
+	public static void setADDRESS(String ADDRESS) {
+		Person.ADDRESS = ADDRESS;
+	}
+	public String getCITY() {
+		return CITY;
+	}
+	public static void setCITY(String CITY) {
+		Person.CITY = CITY;
+	}
+	public String getSTATE() {
+		return STATE;
+	}
+	public static void setSTATE(String STATE) {
+		Person.STATE = STATE;
+	}
+	public String getEMAIL() {
+		return EMAIL;
+	}
+	public static void setEMAIL(String EMAIL) {
+		Person.EMAIL = EMAIL;
+	}
+	public int getZIP() {
+		return ZIP;
+	}
+	public static void setZIP(int ZIP) {
+		Person.ZIP = ZIP;
+	}
+	public long getPHONE_NUMBER() {
+		return PHONE_NUMBER;
+	}
+	public static void setPHONE_NUMBER(long PHONE_NUMBER) {
+		Person.PHONE_NUMBER = PHONE_NUMBER;
 	}
 	
 	
