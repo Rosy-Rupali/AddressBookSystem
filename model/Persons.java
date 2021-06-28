@@ -17,6 +17,23 @@ public class Persons {
 	private String email;
 	private int zip;
 	private long phoneNumber;
+	
+	public Persons(String firstName, String lastName, String address, String city, String state, String email, int zip,
+			long phoneNumber) {
+		setFirstName(firstName);
+		setLastName(lastName);
+		setAddress(address);
+		setCity(city);
+		setState(state);
+		setEmail(email);
+		setZip(zip);
+		setPhoneNumber(phoneNumber);
+	}
+	
+
+	public Persons() {
+	}
+
 
 	public String getFirstName() {
 		return firstName;
@@ -88,21 +105,6 @@ public class Persons {
 				+ ", state=" + state + ", email=" + email + ", zip=" + zip + ", phoneNumber=" + phoneNumber + "]";
 	}
 	
-	@Override
-	public int hashCode() {
-		return Objects.hash(firstName, lastName);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null || getClass() != obj.getClass()) {
-			return false;
-		}
-		Persons person = (Persons) obj;
-		return Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName);
-	}
+	
 
 }
