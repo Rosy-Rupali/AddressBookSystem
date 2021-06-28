@@ -8,267 +8,204 @@
 
 package service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
 import model.Persons;
 
 public class AddressBook {
+	public static Scanner sc = new Scanner(System.in);
+	public static ArrayList<Persons> contactList;
+	public HashMap<String, ArrayList<Persons>> personByState;
+	public HashMap<String, ArrayList<Persons>> personByCity;
 
-	public static List<Persons> personList = new ArrayList<>();// contains all person details
-	ScannerForAddressBook scannerForAddressBook = new ScannerForAddressBook();
-
-	/**
-	 * to get all the list of persons in one book
-	 */
-	public List<Persons> getPersonList() {
-		return personList;
-	}
-
-	@Override
-	public String toString() {
-		return "AddressBookMain{" + "personList = " + personList + '}';
+	public AddressBook() {
+		personByCity = new HashMap<String, ArrayList<Persons>>();
+		personByState = new HashMap<String, ArrayList<Persons>>();
+		contactList = new ArrayList<>();
 	}
 
 	/**
-	 * takes details from the user and adds them to the Person. Then adds the Person
-	 * to the list
+	 * This method add person to the contact list
+	 * @return : details of person in the list
 	 */
-	public void addContact() {
-		Persons persons = new Persons();
-
-		System.out.println("Enter first name");
-		persons.setFirstName(scannerForAddressBook.scannerProvider().nextLine());
-
-		System.out.println("Enter last name");
-		persons.setLastName(scannerForAddressBook.scannerProvider().nextLine());
-
-		System.out.println("Enter address");
-		persons.setAddress(scannerForAddressBook.scannerProvider().nextLine());
-
-		System.out.println("Enter city");
-		persons.setCity(scannerForAddressBook.scannerProvider().nextLine());
-
-		System.out.println("Enter state");
-		persons.setState(scannerForAddressBook.scannerProvider().nextLine());
-
-		System.out.println("Enter email");
-		persons.setEmail(scannerForAddressBook.scannerProvider().nextLine());
-
-		System.out.println("Enter zip");
-		persons.setZip(scannerForAddressBook.scannerProvider().nextInt());
-
-		System.out.println("Enter phone number");
-		persons.setPhoneNumber(scannerForAddressBook.scannerProvider().nextLong());
-
-		personList.add(persons);
-
-	}
-
-	/**
-	 * edits the person details of selected name
-	 */
-	public void editDetails() {
-		String name = getName();
-		if (isPersonExist(name) == true) {
-			Persons person = getPerson(name);
-			boolean isExit = false;
-			while (!isExit) {
-				System.out.println("Select option:" + "\n" + "1.first name" + "\n" + "2.last name" + "\n" + "3.address"
-						+ "\n" + "4.city" + "\n" + "5.state" + "\n" + "6.email" + "\n" + "7.zip" + "\n"
-						+ "8.phone number" + "\n" + "9.exit");
-				switch (scannerForAddressBook.scannerProvider().nextInt()) {
-				case 1:
-					System.out.println("Enter new first name to change: ");
-					person.setFirstName(scannerForAddressBook.scannerProvider().nextLine());
-					break;
-				case 2:
-					System.out.println("Enter new last name to change: ");
-					person.setLastName(scannerForAddressBook.scannerProvider().nextLine());
-					break;
-				case 3:
-					System.out.println("Enter new address to change: ");
-					person.setAddress(scannerForAddressBook.scannerProvider().nextLine());
-					break;
-				case 4:
-					System.out.println("Enter new city to change: ");
-					person.setCity(scannerForAddressBook.scannerProvider().nextLine());
-					break;
-				case 5:
-					System.out.println("Enter new state to change: ");
-					person.setState(scannerForAddressBook.scannerProvider().nextLine());
-					break;
-				case 6:
-					System.out.println("Enter new email to change: ");
-					person.setEmail(scannerForAddressBook.scannerProvider().nextLine());
-					break;
-				case 7:
-					System.out.println("Enter new zip to change: ");
-					person.setZip(scannerForAddressBook.scannerProvider().nextInt());
-					break;
-				case 8:
-					System.out.println("Enter new phone number to change: ");
-					person.setPhoneNumber(scannerForAddressBook.scannerProvider().nextLong());
-					break;
-				default:
-					System.out.println("Thank you!");
-					isExit = true;
-				}
-			}
-
+	public ArrayList<Persons> addContactDetails() {
+		System.out.println("Enter the Details of ContactDetails");
+		System.out.println("Enter the first name");
+		String firstName = sc.next();
+		if (checkDuplicate(firstName)) {
+			System.out.println("Person is already exist");
 		} else {
-			System.out.println("Person does not exists!");
+			System.out.println("Enter the Last name");
+			String lastName = sc.next();
+			sc.nextLine();
+			System.out.println("Enter the Address");
+			String address = sc.next();
+			sc.nextLine();
+			System.out.println("Enter the City");
+			String city = sc.next();
+			sc.nextLine();
+			System.out.println("Enter the State");
+			String state = sc.next();
+			sc.nextLine();
+			System.out.println("Enter the email");
+			String email = sc.next();
+			sc.nextLine();
+			System.out.println("Enter the ZipCode");
+			int zip = sc.nextInt();
+			System.out.println("Enter the contact number...");
+			long phoneNumber = sc.nextLong();
+			Persons contactofPerson = new Persons(firstName, lastName, address, city, state, email, zip, phoneNumber);
+			contactList.add(contactofPerson);
+			if (!personByState.containsKey(state)) {
+				personByState.put(state, new ArrayList<Persons>());
+			}
+			personByState.get(state).add(contactofPerson);
+
+			if (!personByCity.containsKey(city)) {
+				personByCity.put(city, new ArrayList<Persons>());
+			}
+			personByCity.get(city).add(contactofPerson);
+
+		}
+		return contactList;
+	}
+
+	/**
+	 * This method is use to edit the contact list
+     * according to person name
+	 * @param Name : name of person that user want to edit
+	 * @return : edited contact list
+	 */
+	public boolean editContactDetails(String Name) {
+		int flag = 0;
+		for (Persons contact : contactList) {
+			if (contact.getFirstName().equals(Name)) {
+				Scanner sc = new Scanner(System.in);
+				System.out.println("Enter Address: ");
+				String address = sc.next();
+				contact.setAddress(address);
+				sc.nextLine();
+				System.out.println("Enter City: ");
+				String city = sc.next();
+				contact.setCity(city);
+				sc.nextLine();
+				System.out.println("Enter State: ");
+				String state = sc.next();
+				contact.setState(state);
+				sc.nextLine();
+				System.out.println("Enter Email: ");
+				String email = sc.next();
+				contact.setEmail(email);
+				sc.nextLine();
+				System.out.println("Enter Phone Number:");
+				long phoneNumber = sc.nextLong();
+				contact.setPhoneNumber(phoneNumber);
+				System.out.println("Enter Zip Code: ");
+				int zip = sc.nextInt();
+				contact.setZip(zip);
+				flag = 1;
+			}
+		}
+		return flag == 1;
+	}
+
+	/**
+	 * This method is use to delete the contact list
+     * according to person name
+	 * @param name : name of the person that user want to delete
+	 * @return : deleted contact list
+	 */
+	public boolean deleteContact(String name) {
+		int flag = 0;
+		for (Persons contact : contactList) {
+			if (contact.getFirstName().equals(name)) {
+				contactList.remove(contact);
+				flag = 1;
+				break;
+			}
+		}
+		return flag == 1;
+	}
+
+	/**
+	 * This method is use to check any duplicate person is 
+	 * present in the contact list
+	 * @param fname : name of person that user want 
+	 * @return duplicated person if present
+	 */
+	public boolean checkDuplicate(String fname) {
+		int flag = 0;
+		for (Persons p : contactList) {
+			if (p.getFirstName().equals(fname)) {
+				flag = 1;
+				break;
+			}
+		}
+		return flag == 1;
+	}
+
+	/**
+	 * This method is to find person name if present that 
+	 * particular state
+	 * @param State : name of state given by user
+	 */
+	public void getPersonNameByState(String State) {
+		List<Persons> list = contactList.stream().filter(contactName -> contactName.getState().equals(State))
+				.collect(Collectors.toList());
+		for (Persons contact : list) {
+			System.out.println("First Name: " + contact.getFirstName());
+			System.out.println("Last Name: " + contact.getLastName());
+		}
+
+	}
+
+	/**
+	 * This method is to find person name if present that 
+	 * particular city
+	 * @param cityName : name of city given by user
+	 */
+	public void getPersonNameByCity(String cityName) {
+		List<Persons> list = contactList.stream().filter(contactName -> contactName.getCity().equals(cityName))
+				.collect(Collectors.toList());
+		for (Persons contact : list) {
+			System.out.println("First Name: " + contact.getFirstName());
+			System.out.println("Last Name: " + contact.getLastName());
 		}
 	}
 
 	/**
-	 * to remove person from list
-	 *
-	 * @param person object of Person class
+	 * writes contact book to file Contacts.txt
+	 * @param addressBookMain
 	 */
-	public void deleteContact(Persons person) {
-		personList.remove(person);
-		System.out.println(personList);
-	}
-
-	/**
-	 * asks the user for name and returns it
-	 *
-	 * @return person name
-	 */
-	private String getName() {
-		System.out.println("Enter person name");
-		return scannerForAddressBook.scannerProvider().nextLine();
-	}
-
-	/**
-	 * To find if person exists or not
-	 *
-	 * @param name first or last name of the person
-	 * @return true/false
-	 */
-	private boolean isPersonExist(String name) {
-		return personList.stream().anyMatch(
-				personElement -> personElement.getFirstName().equals(name) || personElement.getLastName().equals(name));
-	}
-
-	/**
-	 * To search the person
-	 *
-	 * @param name first or last name of the person
-	 * @return object of the Person (Person it self)
-	 */
-	private Persons getPerson(String name) {
-		Persons foundPerson = personList.stream()
-				.filter(person -> person.getFirstName().equals(name) || person.getLastName().equals(name)).findFirst()
-				.orElse(null);
-		return foundPerson;
-	}
-
-	/**
-	 * asks the user for name and returns it
-	 *
-	 * @return the name of city or state
-	 */
-	private String getCityOrStateName() {
-		System.out.println("Enter city/state name");
-		return scannerForAddressBook.scannerProvider().nextLine();
-	}
-
-	/**
-	 * checks the list for city/state
-	 * 
-	 * @param name city/state name given by user
-	 * @return true/false
-	 */
-	private boolean isCityOrStateExist(String name) {
-		return personList.stream().anyMatch(
-				personElement -> personElement.getCity().equals(name) || personElement.getState().equals(name));
-	}
-
-	/**
-	 * to find person by city/state
-	 * @param name city/state name given by user
-	 * @return the person is found or not
-	 */
-	private Persons searchByCityOrState(String name) {
-		Persons foundPerson = personList.stream()
-				.filter(person -> person.getState().equals(name) || person.getCity().equals(name)).findFirst()
-				.orElse(null);
-		return foundPerson;
-	}
-
-	/**
-	 * finds the person by various by it's name or city/state.
-	 */
-	private void findContactOptions() {
-		System.out.println("Select the option: \n1.find by contact name\n2.find by city/state\n3.exit");
-		int option = scannerForAddressBook.scannerProvider().nextInt();
-
-		switch (option) {
-		case 1:
-			String name1 = getName();
-			if (isPersonExist(name1)) {
-				Persons person1 = getPerson(name1);
-				System.out.println("Person " + name1 + ": " + person1);
-			} else {
-				System.out.println("Person does not exists!");
-			}
-			break;
-		case 2:
-			String name2 = getCityOrStateName();
-			if (isCityOrStateExist(name2)) {
-				Persons person = searchByCityOrState(name2);
-				System.out.println("Person from city/state " + name2 + ": " + person);
-			} else {
-				System.out.println("City/State does not exists!");
-			}
-			break;
-		default:
-			System.out.println("Thank you!");
+	public static void writeData(AddressBookMain addressBookMain) {
+		StringBuffer personBuffer = new StringBuffer();
+		contactList.forEach(person -> {
+			String personDataString = person.toString().concat("");
+			personBuffer.append(personDataString);
+		});
+		try {
+			Files.lines(new File("Contacts.txt").toPath()).map(String::trim).forEach(System.out::println);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * to access the address book
+	 * reads contact book to file Contacts.txt and print them on console
+	 * @param addressBookMain
 	 */
-	public void accessContact() {
-		boolean isExit = false;
-		while (!isExit) {
-			System.out.println(
-					"Select option: \n1.Add Contact\n2.Edit Contact\n3.Delete Contact\n4.Find contact\\n5.Exit");
-			int option = scannerForAddressBook.scannerProvider().nextInt();
-			switch (option) {
-			case 1:
-				if (!isPersonExist(getName())) {
-					addContact();
-				} else {
-					System.out.println("Person already exists!");
-				}
-				break;
-			case 2:
-				if (isPersonExist(getName())) {
-					editDetails();
-				} else {
-					System.out.println("Person does not exists!");
-				}
-				break;
-			case 3:
-				String name = getName();
-				if (isPersonExist(name)) {
-					Persons person = getPerson(name);
-					deleteContact(person);
-				} else {
-					System.out.println("Person does not exist");
-				}
-				break;
-			case 4:
-				findContactOptions();
-				break;
-			default:
-				System.out.println("Thanks!");
-				isExit = true;
-			}
-
+	public static void readData(AddressBookMain addressBookMain) {
+		try {
+			Files.lines(new File("Contacts.txt").toPath()).map(String::trim).forEach(System.out::println);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }
