@@ -18,6 +18,7 @@ public class Persons {
 	private int zip;
 	private long phoneNumber;
 	
+	//Parameterized constructor
 	public Persons(String firstName, String lastName, String address, String city, String state, String email, int zip,
 			long phoneNumber) {
 		setFirstName(firstName);
