@@ -5,6 +5,7 @@
  *
  *************************************************/
 package service;
+
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
@@ -13,7 +14,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AddressBookSimulator {
-	
+
 	public static void main(String args[]) throws InputMismatchException {
 
 		System.out.println("****Welcome to the Address Book System****");
@@ -114,26 +115,27 @@ public class AddressBookSimulator {
 			case 12:
 				AddressBook.readData(addressBookMain);
 				break;
-			 case 13:
-                 try {
-                     AddressBook.writeDataToCSV();
-                 }catch (IOException | CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
-                     e.printStackTrace();
-                 }
-                 break;
-             case 14:
-                 try {
-                     AddressBook.readDataFromCSV();
-                 }catch (IOException e) {
-                     e.printStackTrace();
-                 }
-                 break;
-             case 15: try {
+			case 13:
+				try {
+					AddressBook.writeDataToCSV();
+				} catch (IOException | CsvRequiredFieldEmptyException | CsvDataTypeMismatchException e) {
+					e.printStackTrace();
+				}
+				break;
+			case 14:
+				try {
+					AddressBook.readDataFromCSV();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				break;
+			case 15:
+				try {
 					AddressBook.convertToJson();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-             break;
+				break;
 			case 16:
 				flag = false;
 				break;

@@ -267,8 +267,11 @@ public class AddressBook {
 		}
 	}
 
+	
 	/**
 	 * This method writes contacts to a json file.
+	 * 
+	 * @throws IOException
 	 */
 	public static void convertToJson() throws IOException {
 		String result = "";
