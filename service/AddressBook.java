@@ -6,6 +6,11 @@
  *************************************************/
 
 package service;
+
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -41,6 +46,7 @@ public class AddressBook {
 
 	/**
 	 * This method add person to the contact list
+	 * 
 	 * @return : details of person in the list
 	 */
 	public ArrayList<Persons> addContactDetails() {
@@ -86,8 +92,8 @@ public class AddressBook {
 	}
 
 	/**
-	 * This method is use to edit the contact list
-     * according to person name
+	 * This method is use to edit the contact list according to person name
+	 * 
 	 * @param Name : name of person that user want to edit
 	 * @return : edited contact list
 	 */
@@ -125,8 +131,8 @@ public class AddressBook {
 	}
 
 	/**
-	 * This method is use to delete the contact list
-     * according to person name
+	 * This method is use to delete the contact list according to person name
+	 * 
 	 * @param name : name of the person that user want to delete
 	 * @return : deleted contact list
 	 */
@@ -143,9 +149,10 @@ public class AddressBook {
 	}
 
 	/**
-	 * This method is use to check any duplicate person is 
-	 * present in the contact list
-	 * @param fname : name of person that user want 
+	 * This method is use to check any duplicate person is present in the contact
+	 * list
+	 * 
+	 * @param fname : name of person that user want
 	 * @return duplicated person if present
 	 */
 	public boolean checkDuplicate(String fname) {
@@ -160,8 +167,8 @@ public class AddressBook {
 	}
 
 	/**
-	 * This method is to find person name if present that 
-	 * particular state
+	 * This method is to find person name if present that particular state
+	 * 
 	 * @param State : name of state given by user
 	 */
 	public void getPersonNameByState(String State) {
@@ -175,8 +182,8 @@ public class AddressBook {
 	}
 
 	/**
-	 * This method is to find person name if present that 
-	 * particular city
+	 * This method is to find person name if present that particular city
+	 * 
 	 * @param cityName : name of city given by user
 	 */
 	public void getPersonNameByCity(String cityName) {
@@ -190,6 +197,7 @@ public class AddressBook {
 
 	/**
 	 * writes contact book to file Contacts.txt
+	 * 
 	 * @param addressBookMain
 	 */
 	public static void writeData(AddressBookMain addressBookMain) {
@@ -207,6 +215,7 @@ public class AddressBook {
 
 	/**
 	 * reads contact book to file Contacts.txt and print them on console
+	 * 
 	 * @param addressBookMain
 	 */
 	public static void readData(AddressBookMain addressBookMain) {
@@ -216,41 +225,65 @@ public class AddressBook {
 			e.printStackTrace();
 		}
 	}
-	 /**
-	  *  writing a data into CSV file
+
+	/**
+	 * writing a data into CSV file
+	 * 
 	 * @throws IOException
 	 * @throws CsvRequiredFieldEmptyException
 	 * @throws CsvDataTypeMismatchException
 	 */
-	public static void writeDataToCSV() throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
-	        try (Writer writer = Files.newBufferedWriter(Paths.get("Contacts.csv"));) {
-	            StatefulBeanToCsvBuilder<Persons> builder = new StatefulBeanToCsvBuilder<>(writer);
-	            StatefulBeanToCsv<Persons> beanWriter = builder.build();
-	            beanWriter.write(contactList);
-	            writer.close();
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	    }
+	public static void writeDataToCSV()
+			throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+		try (Writer writer = Files.newBufferedWriter(Paths.get("Contacts.csv"));) {
+			StatefulBeanToCsvBuilder<Persons> builder = new StatefulBeanToCsvBuilder<>(writer);
+			StatefulBeanToCsv<Persons> beanWriter = builder.build();
+			beanWriter.write(contactList);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-	    /**
-	     * Reading a data into CSV file
-	     * @throws IOException
-	     */
-	    public static void readDataFromCSV() throws IOException {
-	        try (Reader reader = Files.newBufferedReader(Paths.get("Contacts.csv"));
-	            CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();){
-	                String[] nextRecord;
-	                while ((nextRecord = csvReader.readNext()) != null) {
-	                    System.out.println("First Name = " + nextRecord[3]);
-	                    System.out.println("Last Name = " + nextRecord[4]);
-	                    System.out.println("Address = " + nextRecord[0]);
-	                    System.out.println("City = " + nextRecord[1]);
-	                    System.out.println("State = " + nextRecord[6]);
-	                    System.out.println("Email = " + nextRecord[2]);
-	                    System.out.println("Phone Number = " + nextRecord[5]);
-	                    System.out.println("Zip Code = " + nextRecord[7]);
-	                }
-	        }
-	    }
+	/**
+	 * Reading a data into CSV file
+	 * 
+	 * @throws IOException
+	 */
+	public static void readDataFromCSV() throws IOException {
+		try (Reader reader = Files.newBufferedReader(Paths.get("Contacts.csv"));
+				CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();) {
+			String[] nextRecord;
+			while ((nextRecord = csvReader.readNext()) != null) {
+				System.out.println("First Name = " + nextRecord[3]);
+				System.out.println("Last Name = " + nextRecord[4]);
+				System.out.println("Address = " + nextRecord[0]);
+				System.out.println("City = " + nextRecord[1]);
+				System.out.println("State = " + nextRecord[6]);
+				System.out.println("Email = " + nextRecord[2]);
+				System.out.println("Phone Number = " + nextRecord[5]);
+				System.out.println("Zip Code = " + nextRecord[7]);
+			}
+		}
+	}
+
+	/**
+	 * This method writes contacts to a json file.
+	 */
+	public static void convertToJson() throws IOException {
+		String result = "";
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			result = mapper.writeValueAsString(contactList);
+			for (Persons person : contactList) {
+				mapper.writeValue(new File("Contacts.json"), person);
+			}
+
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			System.out.println(result);
+		}
+	}
 }

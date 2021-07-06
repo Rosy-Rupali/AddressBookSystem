@@ -6,12 +6,11 @@
  *************************************************/
 package service;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
-
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
-import java.util.ArrayList;
+
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import model.*;
 
 public class AddressBookSimulator {
 	
@@ -36,7 +35,8 @@ public class AddressBookSimulator {
 			System.out.println("12. Read data");
 			System.out.println("13. Write to CSV");
 			System.out.println("14. Read data from CSV");
-			System.out.println("15. Exit");
+			System.out.println("15. Write in Json File");
+			System.out.println("16. Exit");
 
 			System.out.println("Enter choice: ");
 			int option = sc.nextInt();
@@ -127,7 +127,14 @@ public class AddressBookSimulator {
                  }catch (IOException e) {
                      e.printStackTrace();
                  }
-			case 15:
+                 break;
+             case 15: try {
+					AddressBook.convertToJson();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+             break;
+			case 16:
 				flag = false;
 				break;
 			}
